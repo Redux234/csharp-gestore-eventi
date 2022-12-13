@@ -10,15 +10,19 @@ namespace GestoreEventi
     public class Evento
     {
         private string titolo;
-        private string data;
-        private readonly int capienza;
-        private readonly int prenotazioni;
+        private DateTime data;
+        private int capienza;
+        private int prenotazioni;
         public int prenotaposti;
         public int disdiciposti;
 
+        public Evento()
+        {
 
+        }
         public Evento(string titolo, string data, int capienza, int prenotazioni)
         {
+
 
             if (titolo == null || titolo == "")
             {
@@ -28,7 +32,18 @@ namespace GestoreEventi
             {
                 this.titolo = titolo;
             }
-            this.data = data;
+
+            this.data = DateTime.Parse(data);
+            if (this.data < DateTime.Now)
+            {
+                throw new ArgumentOutOfRangeException("data", "Un nuovo evento non può avere luogo nel passato");
+            }
+            else
+            {
+                this.data = DateTime.Parse(data);
+            }
+
+
             if (capienza <= 0)
             {
                 throw new ArgumentOutOfRangeException("capienza", "La capienza dell'evento non può essere minore o uguale a 0");
@@ -37,8 +52,17 @@ namespace GestoreEventi
             {
                 this.capienza = capienza;
             }
-            this.prenotazioni = 0 + this.prenotaposti - this.disdiciposti;
+            if(this.prenotazioni > this.capienza)
+            {
+                throw new ArgumentOutOfRangeException("prenotazioni", "Non puoi prenotare più posti di quelli disponibili");
+            }
+            else
+            {
+                this.prenotazioni = prenotazioni;
+            }
+            
         }
+
 
         public string Gettitolo()
         {
@@ -46,7 +70,7 @@ namespace GestoreEventi
         }
         public string Getdata()
         {
-            return data;
+            return data.ToString();
         }
         public int Getcapienza()
         {
@@ -54,7 +78,15 @@ namespace GestoreEventi
         }
         public int Getprenotazioni()
         {
-            return prenotazioni;
+            if (this.prenotazioni > this.capienza)
+            {
+                throw new ArgumentOutOfRangeException("prenotazioni", "Non puoi prenotare più posti di quelli disponibili");
+            }
+            else
+            {
+                return prenotazioni;
+            }
+
         }
         public int Getprenotaposti()
         {
@@ -80,7 +112,31 @@ namespace GestoreEventi
         public void Setdata(string data)
         {
            
-            this.data = data;
+            this.data = DateTime.Parse(data);
+            if (this.data < DateTime.Now)
+            {
+                throw new ArgumentOutOfRangeException("data", "Un nuovo evento non può avere luogo nel passato");
+            }
+            else
+            {
+                this.data = DateTime.Parse(data);
+            }
+        }
+
+        public void Setcapienza(int capienza)
+        {
+            this.capienza = capienza;
+        }
+        public void Setprenotazioni(int prenotazioni)
+        {
+            if (this.prenotazioni > this.capienza)
+            {
+                throw new ArgumentOutOfRangeException("prenotazioni", "Non puoi prenotare più posti di quelli disponibili");
+            }
+            else
+            {
+                this.prenotazioni = prenotazioni;
+            }
         }
         public void Setprenotaposti(int prenotaposti)
         {
@@ -114,5 +170,7 @@ namespace GestoreEventi
             }
             
         }
+
+      
     }
 }
