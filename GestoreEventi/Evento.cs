@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace GestoreEventi
 {
+
+   
     public class Evento
     {
-        private string titolo;
-        private DateTime data;
-        private int capienza;
-        private int prenotazioni;
+        public string titolo;
+        public DateTime data;
+        public int capienza;
+        public int prenotazioni;
         public int prenotaposti;
         public int disdiciposti;
 
@@ -152,7 +154,7 @@ namespace GestoreEventi
             {
                 this.prenotaposti = prenotaposti;
             }
-            
+
         }
         public void Setdisdiciposti(int disdiciposti)
         {
